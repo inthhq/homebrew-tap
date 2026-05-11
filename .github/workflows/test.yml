@@ -1,0 +1,41 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: brew install / test / audit
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Tap syntax
+        run: brew test-bot --only-tap-syntax
+
+      - name: Install formula
+        run: brew install --build-from-source --verbose Formula/inrepo.rb
+
+      - name: Run brew test
+        run: brew test inrepo
+
+      - name: Audit formula
+        run: brew audit --strict --online Formula/inrepo.rb
+
+      - name: Smoke test CLI
+        run: |
+          inrepo --help | head -5
+          inrepo --help | grep -q "Usage:"
