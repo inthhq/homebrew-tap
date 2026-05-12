@@ -23,17 +23,20 @@ jobs:
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
+      - name: Tap workspace as inthhq/tap
+        run: brew tap inthhq/tap "$GITHUB_WORKSPACE"
+
       - name: Tap syntax
         run: brew test-bot --only-tap-syntax
 
       - name: Install formula
-        run: brew install --build-from-source --verbose Formula/inrepo.rb
+        run: brew install --build-from-source --verbose inthhq/tap/inrepo
 
       - name: Run brew test
-        run: brew test inrepo
+        run: brew test inthhq/tap/inrepo
 
       - name: Audit formula
-        run: brew audit --strict --online Formula/inrepo.rb
+        run: brew audit --strict --online inthhq/tap/inrepo
 
       - name: Smoke test CLI
         run: |
