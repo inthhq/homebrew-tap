@@ -14,17 +14,30 @@ concurrency:
 
 jobs:
   test:
-    name: brew install / test / audit
+    name: brew install / test / audit (${{ matrix.formula }})
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        formula:
+          - inrepo
+          - c15t
+          - readie
+          - leadtype
+          # dsar formula is held until dsar republishes a tarball with
+          # `workspace:*` and `catalog:*` specifiers resolved at publish
+          # time. The 0.0.5 tarball ships unresolved `catalog:effect`
+          # refs in dependencies/peerDependencies, which npm rejects
+          # with EUNSUPPORTEDPROTOCOL. See inthhq/dsar release pipeline.
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@225e0592b0c9d7d41530f7080ba12b5c643ae2e5 # master @ 2026-05-11
 
       # Symlink the checkout into the standard Homebrew taps location so
-      # `brew install inthhq/tap/inrepo` resolves correctly. `brew tap user/repo PATH`
+      # `brew install inthhq/tap/<formula>` resolves correctly. `brew tap user/repo PATH`
       # is not a stable interface in modern Homebrew.
       - name: Wire workspace as inthhq/tap
         run: |
@@ -41,15 +54,10 @@ jobs:
         run: brew test-bot --only-tap-syntax
 
       - name: Install formula
-        run: brew install --build-from-source --verbose inthhq/tap/inrepo
+        run: brew install --build-from-source --verbose inthhq/tap/${{ matrix.formula }}
 
       - name: Run brew test
-        run: brew test inthhq/tap/inrepo
+        run: brew test inthhq/tap/${{ matrix.formula }}
 
       - name: Audit formula
-        run: brew audit --strict --online inthhq/tap/inrepo
-
-      - name: Smoke test CLI
-        run: |
-          inrepo --help | head -5
-          inrepo --help | grep -q "Usage:"
+        run: brew audit --strict --online inthhq/tap/${{ matrix.formula }}
