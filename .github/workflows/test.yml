@@ -23,8 +23,19 @@ jobs:
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
-      - name: Tap workspace as inthhq/tap
-        run: brew tap inthhq/tap "$GITHUB_WORKSPACE"
+      # Symlink the checkout into the standard Homebrew taps location so
+      # `brew install inthhq/tap/inrepo` resolves correctly. `brew tap user/repo PATH`
+      # is not a stable interface in modern Homebrew.
+      - name: Wire workspace as inthhq/tap
+        run: |
+          set -euxo pipefail
+          REPO="${{ github.repository }}"
+          ORG="${REPO%%/*}"
+          NAME="${REPO##*/}"
+          TAP_PARENT="$(brew --repository)/Library/Taps/${ORG}"
+          mkdir -p "$TAP_PARENT"
+          ln -s "$GITHUB_WORKSPACE" "${TAP_PARENT}/${NAME}"
+          brew tap
 
       - name: Tap syntax
         run: brew test-bot --only-tap-syntax
