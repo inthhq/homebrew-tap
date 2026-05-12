@@ -14,7 +14,7 @@ class Readie < Formula
 
   test do
     assert_predicate bin/"readie", :executable?
-    output = shell_output("#{bin}/readie --help 2>&1", 0)
+    output = shell_output("#{bin}/readie --help 2>&1")
     assert_match(/readie/i, output)
   end
 end

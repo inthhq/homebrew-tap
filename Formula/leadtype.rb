@@ -14,7 +14,7 @@ class Leadtype < Formula
 
   test do
     assert_predicate bin/"leadtype", :executable?
-    output = shell_output("#{bin}/leadtype --help 2>&1", 0)
+    output = shell_output("#{bin}/leadtype --help 2>&1")
     assert_match(/leadtype|usage/i, output)
   end
 end

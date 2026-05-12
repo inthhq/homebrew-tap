@@ -14,7 +14,7 @@ class Dsar < Formula
 
   test do
     assert_predicate bin/"dsar", :executable?
-    output = shell_output("#{bin}/dsar --help 2>&1", 0)
+    output = shell_output("#{bin}/dsar --help 2>&1")
     assert_match(/dsar/i, output)
   end
 end
