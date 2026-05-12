@@ -21,12 +21,15 @@ inrepo --help
 | ------- | ----------- | ----------- |
 | [`inrepo`](./Formula/inrepo.rb) | [`inrepo`](https://www.npmjs.com/package/inrepo) | Vendor upstream git repositories into `inrepo_modules` from declarative config |
 | [`c15t`](./Formula/c15t.rb) | [`@c15t/cli`](https://www.npmjs.com/package/@c15t/cli) | Scaffold c15t cookie banners, preference center, types, and migrations |
-| [`dsar`](./Formula/dsar.rb) | [`dsar`](https://www.npmjs.com/package/dsar) | Data Subject Access Request framework with subpath exports |
 | [`readie`](./Formula/readie.rb) | [`readie`](https://www.npmjs.com/package/readie) | Generate high-quality README files from a validated JSON config |
 | [`leadtype`](./Formula/leadtype.rb) | [`leadtype`](https://www.npmjs.com/package/leadtype) | Framework-neutral docs pipeline tooling for MDX, LLM bundles, and search |
 
 > The `c15t` formula is an alias for the `@c15t/cli` npm package — installing it
 > exposes a `c15t` command on `$PATH` (the underlying npm bin name is `cli`).
+>
+> A `dsar` formula is planned but held until [`inthhq/dsar`](https://github.com/inthhq/dsar)
+> publishes a tarball with `workspace:*` / `catalog:*` specifiers resolved at
+> publish time (the current `0.0.5` tarball is uninstallable via plain `npm`).
 
 ## How updates work
 
@@ -39,7 +42,6 @@ against the new version before the PR can be merged.
 | ------- | ----------- |
 | `inrepo` | [`inthhq/inrepo`](https://github.com/inthhq/inrepo) |
 | `c15t` | [`c15t/c15t`](https://github.com/c15t/c15t) |
-| `dsar` | [`inthhq/dsar`](https://github.com/inthhq/dsar) |
 | `readie` | [`inthhq/readie`](https://github.com/inthhq/readie) |
 | `leadtype` | [`inthhq/leadtype`](https://github.com/inthhq/leadtype) |
 

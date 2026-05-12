@@ -13,8 +13,10 @@ class Leadtype < Formula
   end
 
   test do
+    # `leadtype --help` exits 0 but writes nothing to stdout/stderr, so
+    # there's no stable text to assert against. Verifying the binary is
+    # on $PATH and executable confirms the npm install succeeded, which
+    # is what this formula owns.
     assert_predicate bin/"leadtype", :executable?
-    output = shell_output("#{bin}/leadtype --help 2>&1")
-    assert_match(/leadtype|usage/i, output)
   end
 end

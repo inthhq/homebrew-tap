@@ -22,9 +22,13 @@ jobs:
         formula:
           - inrepo
           - c15t
-          - dsar
           - readie
           - leadtype
+          # dsar formula is held until dsar republishes a tarball with
+          # `workspace:*` and `catalog:*` specifiers resolved at publish
+          # time. The 0.0.5 tarball ships unresolved `catalog:effect`
+          # refs in dependencies/peerDependencies, which npm rejects
+          # with EUNSUPPORTEDPROTOCOL. See inthhq/dsar release pipeline.
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
