@@ -1,8 +1,8 @@
 class Inrepo < Formula
   desc "Vendor upstream git repositories into inrepo_modules from declarative config"
   homepage "https://github.com/inthhq/inrepo"
-  url "https://registry.npmjs.org/inrepo/-/inrepo-0.0.8.tgz"
-  sha256 "949874c2c760ece5a2fd5234ff0e11b715d82fb3ffc585dd1db9afec06a4ed18"
+  url "https://registry.npmjs.org/inrepo/-/inrepo-0.0.9.tgz"
+  sha256 "38daec45bb91b31d473095da9018501329bbff6d4138d3c43cfd04f9756b2822"
   license "MIT"
 
   depends_on "node"
